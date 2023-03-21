@@ -1,0 +1,203 @@
+<hr>
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-9">
+        <h3>Groups</h3>
+      </div>
+      <div class="col-3">
+    <button class="btn btn-primary" style="float: right ; background-color: #2ad9c2;" [routerLink]="['/groups']"
+        routerLinkActive="active-link">
+        <span class="d-none d-sm-inline" ><i class="fa fa-plus"></i></span>
+        <span class="d-inline d-sm-none"> <i class="fa fa-plus"></i></span>
+      </button>
+    </div>
+  </div>
+<div class="row ">
+    <div class="col-8 d-flex justify-content-start align-items-start">
+      <div class="row">
+      <ul class="nav nav-tabs inactgrp">
+        <li class="nav-item col-5">
+          <a id="activeGroup" class="nav-link active position-relative textLabel" data-toggle="tab" href="#ActiveGroups">Active</a>
+        </li>
+        <li class="nav-item col-6">
+          <a id="inactiveGroup" class="nav-link textLabel" data-toggle="tab" href="#InactiveGroups">Inactive</a>
+        </li>
+      </ul>
+      </div>
+    </div>
+    <div class="col-4 d-flex justify-content-end">
+      <input type="search" class="form-control bg-light small" aria-label="Search"
+        aria-describedby="basic-addon2" placeholder="Search by Group name"
+        [(ngModel)]="SearchGroup" style="background-color: white" />
+    </div>
+</div>
+<!-- <br/>
+  <div class="row" style="cursor: pointer;">
+
+    <div class="col-sm-8 right">
+      <button
+        class="btn btn-success btn-sm"
+        style="float: right"
+        [routerLink]="['/groups']"
+        routerLinkActive="active-link">
+        <i class="fa fa-plus"></i>&nbsp;Add Group
+      </button>
+      &nbsp;
+     
+    </div>
+</div>
+ --><br/>
+ <div class="tab-content">
+  <div id="ActiveGroups" class="tab-pane fade in active show">
+    <div class="row" style="width: 100%;cursor: pointer;">
+      <div class="col-md-6 col-lg-3 col-sm-12" *ngFor="let item of activeGroups; let i = index"  (click)="send(item.id)" >
+      <div  *ngIf="item.groupName.toUpperCase().includes(this.SearchGroup.toUpperCase())" >
+          <div class="card card-widget widget-user shadow">
+            <div class="widget-user-header bg-info">
+              <h3 class="widget-user-username" style="font-size: 20px;"><b>{{item.groupName  | titlecase}} </b>
+                <b *ngIf="item.isActive"> <span class="dot-online"></span></b>
+                <b *ngIf="!item.isActive"> <span class="dot-offline"></span></b>
+              </h3>
+              
+              <!-- <h5 class="widget-user-desc"> {{item.addedBy | uppercase}}</h5> -->
+    
+          <div class="row box" >
+            <div class="col-sm-4">
+              <div class="description">
+                <span class="description-text">Added On</span>
+                <h5 class="description-header">{{item.addedOn}}</h5>
+              </div>
+            </div>
+            <div class="col-sm-4 border-left">
+            </div>
+            <div class="col-sm-4 border-left" style="padding-right: -1px;">
+              <div class="description">
+                <span class="description-text">Added By</span>
+                <h5 class="description-header">{{item.addedBy}}</h5>
+              </div>
+            </div>
+          </div>
+    
+        </div>
+           
+            <!-- <div class="col-sm-4 border-right">
+              <div class="description-block">
+                <h5 class="description-header">{{item.addedOn}}</h5>
+                <span class="description-text"><b>Added On</b></span>
+              </div>
+              <div class="description-block">
+                <h5 class="description-header">{{item.addedBy}}</h5>
+                <span class="description-text"><b>Added By</b></span>
+              </div>
+            </div> -->
+    
+            <div class="widget-user-image">
+              <img
+                class="img-circle elevation-2"
+                src="../../assets/img/undraw_profile_1.svg"
+                alt="UserAvatar"
+              />
+            </div>
+            <div class="card-footer">
+              <div class="row same-row">
+                <div class="col-sm-6 border-right">
+                  <div class="description-block">
+                    <span class="description-text"><b>Total Expense</b></span>
+                    <!-- <h5 class="description-header">₹&nbsp;{{item.amount}}</h5> -->
+                    <h5 class="description-header"><span class="{{item.icon}}">&nbsp; {{item.amount}}</span></h5>
+                  </div>
+                </div>
+                <!-- <div class="col-sm-2"></div> -->
+                <div class="col-sm-6">
+                  <div class="description-block">
+                    <span class="description-text"><b>Members</b></span>
+                    <h5 class="description-header">{{item.memberCount}}</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+     
+      </div>
+  </div>
+  <div id="InactiveGroups" class="tab-pane fade">
+    <div class="row" style="width: 100%;cursor: pointer;">
+
+      <div class="col-md-3" *ngFor="let item of inActiveGroups; let i = index"  (click)="send(item.id)" >
+      <div  *ngIf="item.groupName.toUpperCase().includes(this.SearchGroup.toUpperCase())">
+          <div class="card card-widget widget-user shadow">
+            <div class="widget-user-header bg-info">
+              <h3 class="widget-user-username" style="font-size: 20px;"><b>{{item.groupName  | titlecase}} </b>
+                <b *ngIf="item.isActive"> <span class="dot-online"></span></b>
+                <b *ngIf="!item.isActive"> <span class="dot-offline"></span></b>
+              </h3>
+              
+              <!-- <h5 class="widget-user-desc"> {{item.addedBy | uppercase}}</h5> -->
+    
+          <div class="row" style="padding-top: 40px;">
+            <div class="col-sm-4" style="padding-left: 0px;">
+              <div class="description">
+                <span class="description-text">Added On</span>
+                <h5 class="description-header">{{item.addedOn}}</h5>
+              </div>
+            </div>
+            <div class="col-sm-4 border-left">
+            </div>
+            <div class="col-sm-4 border-left" style="padding-right: -1px;">
+              <div class="description">
+                <span class="description-text">Added By</span>
+                <h5 class="description-header">{{item.addedBy}}</h5>
+              </div>
+            </div>
+          </div>
+    
+        </div>
+           
+            <!-- <div class="col-sm-4 border-right">
+              <div class="description-block">
+                <h5 class="description-header">{{item.addedOn}}</h5>
+                <span class="description-text"><b>Added On</b></span>
+              </div>
+              <div class="description-block">
+                <h5 class="description-header">{{item.addedBy}}</h5>
+                <span class="description-text"><b>Added By</b></span>
+              </div>
+            </div> -->
+    
+            <div class="widget-user-image">
+              <img
+                class="img-circle elevation-2"
+                src="../../assets/img/undraw_profile_1.svg"
+                alt="UserAvatar"
+              />
+            </div>
+            <div class="card-footer">
+              <div class="row">
+                <div class="col-sm-6 border-right">
+                  <div class="description-block">
+                    <span class="description-text"><b>Total Expense</b></span>
+                    <!-- <h5 class="description-header">₹&nbsp;{{item.amount}}</h5> -->
+                    <h5 class="description-header"><span class="{{item.icon}}">&nbsp; {{item.amount}}</span></h5>
+                  </div>
+                </div>
+                <!-- <div class="col-sm-2"></div> -->
+                <div class="col-sm-6">
+                  <div class="description-block">
+                    <span class="description-text"><b>Members</b></span>
+                    <h5 class="description-header">{{item.memberCount}}</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+     
+      </div>
+  </div>
+  
+</div>
+
+</div>

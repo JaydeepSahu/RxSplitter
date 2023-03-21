@@ -1,0 +1,57 @@
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+
+    <div class="container-fluid">
+    <div id="mySidenav" class="sidenav">
+        <!-- <span class="logoText" routerLink="Dashboard" style="position: absolute; color: white;
+        top: 0;">Rx-Splitter</span> -->
+        <!-- <hr style="    height: 10px;"> -->
+        <a routerLink="Dashboard"><i class="fas fa-home"></i>&nbsp; Dashboard</a>
+        <a routerLink="showExpenses" routerLinkActive="active-link"><i class="fas fa-money"></i>&nbsp; Expenses</a>
+        <a routerLink="reports" routerLinkActive="
+        /" ><i class="fas fa-file"></i>&nbsp;Reports</a>
+        <a routerLinkActive="
+        /" ><i class="fa fa-group"></i>&nbsp;Groups <i class="fa-sharp fa-solid fa-caret-down" style="padding: 10px;" (click)="showGroups()"></i></a>  
+       <div class="showGroups" id="showGroups" >
+         <div *ngFor="let grp of groupsOfUser">
+           <a routerLink="groupDetails/{{grp.id}}" style="border: none;" >{{grp.groupName}}</a>
+          </div>
+        </div>
+      </div>
+      
+      <div id="main">
+        <app-header></app-header>
+        <!-- <span style="font-size:30px;cursor:pointer" (click)="openNav()">&#9776; </span> -->
+        <router-outlet></router-outlet>
+      </div>
+    <!-- <div class="wrapper">
+      <input type="checkbox" id="btn" hidden>
+      <label for="btn" class="menu-btn">
+        <i class="fas fa-bars"></i>
+        <i class="fas fa-times"></i>
+      </label>
+      <nav id="sidebar">
+        <div class="title">Side Menu</div>
+        <ul class="list-items">
+          <li><a href="#"><i class="fas fa-home"></i>Home</a></li>
+          <li><a href="#"><i class="fas fa-sliders-h"></i>Clients</a></li>
+          <li><a href="#"><i class="fas fa-address-book"></i>Services</a></li>
+          <li><a href="#"><i class="fas fa-cog"></i>Settings</a></li>
+          <li><a href="#"><i class="fas fa-stream"></i>Features</a></li>
+          <li><a href="#"><i class="fas fa-user"></i>About us</a></li>
+          <li><a href="#"><i class="fas fa-globe-asia"></i>Languages</a></li>
+          <li><a href="#"><i class="fas fa-envelope"></i>Contact us</a></li>
+          <div class="icons">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </ul>
+      </nav>
+    </div>
+    <div class="content">
+     <router-outlet></router-outlet>
+    </div> -->
+
+</div>

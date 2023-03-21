@@ -1,0 +1,149 @@
+
+ .btn-icn{
+    float: right; margin-left:5px;
+       display: none;
+        background-color:#2ad9c2; 
+}
+.btn-txt{
+    background-color:#2ad9c2;
+}
+.btn-cnl{
+    background-color:#d9534f;
+}
+.btn-cancel{
+    background-color:#d9534f;
+}
+.font-f{
+    font-family: "IBM Plex Sans", sans-serif;
+}
+.btn-add{
+    margin-left: 9px;
+    padding: 7px;
+    background-color:#2ad9c2; 
+}
+.savemember{
+   
+    background-color:#2ad9c2; 
+}
+
+.cnlmember{
+  
+    background-color:#d9534f;
+}
+
+
+@media screen and (max-width: 844px) {
+   .btn-txt{
+              display: none;
+   }
+   .btn-cnl{
+             display: none;
+}
+   .btn-icn{
+    float: right; margin-left:5px;
+       display: block;
+}
+}
+
+  @media screen and (max-width: 320px) {
+    .emailwidth{
+        width: 100%;
+    }
+    .btn-add{
+      
+        margin-top: 8px;
+        
+    }
+    .rmvq{
+        margin-top: 8px;
+    }
+    .cnlmember{
+        margin-top: 21px;
+        background-color:#d9534f;
+    }
+    .savemember{
+        margin-top: 21px;
+        background-color:#2ad9c2; 
+    }
+   }
+
+   @media screen and (min-width: 375px) {
+    .emailwidth{
+        width: 100%;
+    }
+    .btn-add{
+      
+        margin-top: 8px;
+        
+    }
+    .rmvq{
+        margin-top: 8px;
+    }
+    .cnlmember{
+        margin-top: 21px;
+        background-color:#d9534f;
+    }
+    .savemember{
+        margin-top: 21px;
+        background-color:#2ad9c2; 
+    }
+   }
+
+   @media screen and (min-width: 425px) {
+    .emailwidth{
+        width: 100%;
+    }
+    .btn-add{
+      
+        margin-top: 8px;
+        
+    }
+    .rmvq{
+        margin-top: 1px;
+        margin-left: -13px;
+    }
+    .cnlmember{
+        margin-top: 21px;
+        background-color:#d9534f;
+    }
+    .savemember{
+        margin-top: 21px;
+        background-color:#2ad9c2; 
+    }
+   }
+
+   @media screen and (min-width: 768px) {
+    .emailwidth{
+        width: 100%;
+    }
+    .btn-add{
+      
+        margin-top: 8px;
+        
+    }
+    .rmvq{
+        margin-left: 19px;
+    }
+    .cnlmember{
+        margin-top: 21px;
+        background-color:#d9534f;
+    }
+    .savemember{
+        margin-top: 21px;
+        background-color:#2ad9c2; 
+    }
+   }
+
+   @media screen and (max-width: 559px) {
+    .col-auto {
+        flex: 0 0 auto;
+        min-width: 100%;
+        width: auto;
+    }
+   }
+
+   @media screen and (max-width: 576px) {
+    .btnsAddGroup{
+        padding: 0%;
+    }
+   }

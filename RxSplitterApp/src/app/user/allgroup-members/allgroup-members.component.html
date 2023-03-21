@@ -1,0 +1,191 @@
+<button
+  data-toggle="modal"
+  data-target="#exampleModalLong1"
+  style="cursor: pointer; position: relative"
+  class="btn btn-success btn-sm"
+  [disabled]="!isMemberActive"
+  >Add Members</button
+>
+<br />
+<!-- <h5 style="color: black" class="mt-2">Total Expense</h5>
+<span class="fa fa-rupee" style="margin-left: 30px">
+  &nbsp;{{ groupExpenseListData }}</span
+> -->
+<br /><br />
+<h5 style="color: black">Members</h5>
+<ul *ngFor="let i of list; let j = index" style="list-style-type: disc">
+  <div *ngIf="loggedUserVal == i.name">
+    <div *ngFor="let k of summaryDetails">
+    <div class="" style="word-wrap: break-word" *ngIf="k.participantId==i.id">
+      <i class="fa-solid fa-user"></i> &nbsp;
+      <strong style="color: #008dffbd"> You </strong>
+
+    
+
+    <div *ngIf="summaryDetails.length > 0">
+      <span *ngIf="k?.remainingAmount < 0 ">
+        <p style="color: red; font-weight: bold">
+          <span style="font-size: 12px">owe</span>&nbsp;<i [ngClass]="CurrencyIcon"></i> {{
+            k.remainingAmount| toPositiveAmount
+          }}
+        </p>
+       
+      </span>
+      <span *ngIf="k?.remainingAmount > 0 ">
+        <p style="color: green; font-weight: bold">
+          <span style="font-size: 12px">gets back</span>&nbsp;<i [ngClass]="CurrencyIcon"></i> {{
+            k.remainingAmount| toPositiveAmount
+          }}
+        </p>
+      </span>
+      <span *ngIf="k?.remainingAmount == 0 ">
+        <p style="color:#4f0cff; font-weight: bold" class="text-info">
+          <span style="font-size: 12px">doesn't owe anything</span> 
+      </span>
+    </div>
+  </div>
+  </div>
+</div>
+</ul>
+<!-- <hr /> -->
+<ul *ngFor="let i of list; let j = index" style="list-style-type: disc">
+  <div *ngIf="loggedUserVal != i.name">
+    <div *ngFor="let k of summaryDetails">
+    <div class="" style="word-wrap: break-word" *ngIf="k.participantId==i.id">
+      <i class="fa-solid fa-user"></i> &nbsp;
+      <strong style="color: black"> {{i.name}} </strong>
+    
+    <div *ngIf="summaryDetails.length > 0">
+      <span *ngIf="k?.remainingAmount < 0 ">
+        <p style="color: red; font-weight: bold">
+          <span style="font-size: 12px">owe</span> &nbsp;<i [ngClass]="CurrencyIcon"></i> {{
+            k.remainingAmount| toPositiveAmount
+          }}
+        </p>
+      </span>
+      <span *ngIf="k?.remainingAmount > 0 ">
+        <p style="color: green; font-weight: bold">
+          <span style="font-size: 12px">gets back</span> &nbsp;<i [ngClass]="CurrencyIcon"></i> {{
+            k.remainingAmount| toPositiveAmount
+          }}
+        </p>
+      </span>
+      <span *ngIf="k?.remainingAmount == 0 ">
+        <p style="color: #4f0cff; font-weight: bold" class="text-info">
+          <span style="font-size: 12px">doesn't  owe anything</span> 
+      </span>
+      
+    </div>
+  </div>
+  </div>
+</div>
+</ul>
+
+<!-- Modal AddMember-->
+<div
+  class="modal fade"
+  id="exampleModalLong1"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLongTitle"
+  aria-hidden="true"
+  *ngIf="isMemberActive"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: #03a9f454;padding: 5px 9px 5px 12px;">
+        <h6 class="modal-title" id="exampleModalLongTitle">
+          Add Group Members here!
+        </h6>
+        <button type="button" id="close" class="btn-close" data-dismiss="modal" aria-label="Close">
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- <hr /> -->
+        <form [formGroup]="showForm">
+          <h6>Group Member</h6>
+          <div formArrayName="lstGroupMember">
+            <div
+              [formGroupName]="i"
+              *ngFor="let item of lstGroupMember.controls; let i = index"
+            >
+              <div class="row">
+                <div class="col col-md-10">
+                  <!-- <label>Add Member</label> -->
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Enter Email"
+                    formControlName="Email"
+                  />
+                  <div
+                    *ngIf="
+                      item.controls.Email.invalid && item.controls.Email.touched
+                    "
+                  >
+                    <div
+                      class="text-danger"
+                      style="font-size: 12px"
+                      [hidden]="
+                        !item.controls.Email.errors.required &&
+                        item.controls.Email.touched
+                      "
+                    >
+                      Email is required
+                    </div>
+                    <div
+                      class="text-danger"
+                      style="font-size: 12px"
+                      [hidden]="
+                        !item.controls.Email.errors.email &&
+                        item.controls.Email.touched
+                      "
+                    >
+                      Email is not in valid format
+                    </div>
+                  </div>
+                  <!-- <div style="color: red;" [hidden]="!item.controls.Email.errors.required">
+                          Email is required
+                        </div> -->
+                  <!-- <div [hidden]="!item.controls.Email.errors.pattern">
+                          Email is not valid (USE like that @gmail.com)
+                        </div> -->
+
+                  <br />
+                </div>
+
+                <div class="col col-md-2">
+                  <span class="fa fa-close fa-lg text-danger" style="margin-left:-8px" (click)="removeQuantity(i)"></span> 
+                  <!-- <button (click)="removeQuantity(i)" class="btn btn-danger">
+                    Remove
+                  </button> -->
+                </div>
+              </div>
+            </div>
+            <div class="col col-md-12">
+              <br />
+              <button class="btn btn-primary btn-sm" (click)="addEContact()">
+                Add more
+              </button>
+              &nbsp;
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
+          Cancel
+        </button>
+        <button
+          [disabled]="showForm.invalid"
+          (click)="submitGroupMember()"
+          type="button"
+          class="btn btn-primary btn-sm"
+          type="submit"
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

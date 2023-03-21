@@ -1,0 +1,575 @@
+<div class="container">
+  <div class="row">
+    <!-- Hello -->
+    <div class="col-md-9">
+      <div class="row">
+        <div class="col-md-6">
+          <h3>{{ groupName | titlecase }}</h3>
+        </div>
+        <div class="col-md-6">
+          <button *ngIf="grpId !=myExpenseGId" class="btn btn-success btn-sm font-f" [disabled]="!isMemberActive"
+            style="float: right; margin-left: 5px" data-toggle="modal" data-target="#settle_up_form">
+            Settle Up
+          </button>
+          <button *ngIf="grpId !=myExpenseGId" class="btn btn-danger btn-sm font-f" [disabled]="!isMemberActive"
+            style="float: right; margin-left: 5px" (click)="LeaveGroup()">
+            Leave Group
+          </button>
+          <button class="btn btn-primary btn-sm font-f" [disabled]="!isMemberActive"
+            style="float: right; margin-left: 5px" data-bs-toggle="modal" href="#exampleModalToggle" role="button">
+            Add Expense
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr />
+
+  <div class="row">
+    <div class="col-md-9 col-sm-11 col-lg-9">
+      <div class="card card-primary card-tabs">
+        <div class="card-header p-0 pt-1">
+          <ul class="nav nav-tabs" id="custom-tabs-five-tab" role="tablist" *ngIf="grpId !=myExpenseGId">
+            <li class="nav-item">
+              <a class="nav-link active position-relative" id="custom-tabs-five-overlay-tab" data-toggle="pill"
+                href="#custom-tabs-five-overlay" role="tab" aria-controls="custom-tabs-five-overlay"
+                aria-selected="true"> All Expenses <br><br>
+                <!-- <button type="button" class="btn btn-primary position-relative"> -->
+                <span style="text-align:center ; font-size: medium;"> <i [ngClass]="CurrencyIcon"></i>
+                  {{totalAmountG}}</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link font-f" id="custom-tabs-five-overlay-dark-tab Transaction=1" data-toggle="pill"
+                href="#custom-tabs-five-overlay-dark Transaction=1" role="tab"
+                aria-controls="custom-tabs-five-overlay-dark Transaction=1" aria-selected="false">All
+                Transaction<br /><br />
+
+                <span style="text-align: center; font-size: medium; color: #c900c9"><i [ngClass]="CurrencyIcon"></i> {{
+                  totalExpenseAmount }}</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link font-f" id="custom-tabs-five-overlay-dark-tab Transaction=0" data-toggle="pill"
+                href="#custom-tabs-five-overlay-dark Transaction=0" role="tab"
+                aria-controls="custom-tabs-five-overlay-dark Transaction=0" aria-selected="false">Settled
+                Transaction<br /><br />
+                <span style="text-align: center; font-size: medium; color: #00c90d">
+                  <i [ngClass]="CurrencyIcon"></i> {{ settledExpenseAmount }}</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="custom-tabs-five-overlay-dark-tab Transaction=-1" data-toggle="pill"
+                href="#custom-tabs-five-overlay-dark Transaction=-1" role="tab"
+                aria-controls="custom-tabs-five-overlay-dark Transaction=-1" aria-selected="false">Pending on
+                me<br /><br />
+                <span style="text-align: center; font-size: medium; color: #c90000">
+                  <i [ngClass]="CurrencyIcon"></i> {{ pendingOnMeAmount }}</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="custom-tabs-five-overlay-dark-tab Transaction=2" data-toggle="pill"
+                href="#custom-tabs-five-overlay-dark Transaction=2" role="tab"
+                aria-controls="custom-tabs-five-overlay-dark Transaction=2" aria-selected="false">Pending on
+                others<br /><br />
+                <span style="text-align: center; font-size: medium; color: #dfdf36">
+                  <i [ngClass]="CurrencyIcon"></i> {{ pendingOnOthers }}</span>
+              </a>
+            </li>
+            <!-- <li class="nav-item">
+              <a class="nav-link" id="custom-tabs-five-normal-tab" data-toggle="pill" href="#custom-tabs-five-normal"
+                role="tab" aria-controls="custom-tabs-five-normal" aria-selected="false">Normal Tab</a>
+            </li> -->
+          </ul>
+        </div>
+        <div class="card-body">
+          <div class="tab-content" id="custom-tabs-five-tabContent">
+            <div class="tab-pane fade active show" id="custom-tabs-five-overlay" role="tabpanel"
+              aria-labelledby="custom-tabs-five-overlay-tab">
+              <div class="overlay-wrapper">
+               
+                <div class="row mt-3">
+                  <div class="col-md-12" style="border-right: 2px solid #00a9ff;">
+                    <div class="card">
+                      <div class="row card-header filterCardHeader m-1">
+                        <nav class="product-filter">
+                
+                          <!-- <h1>Jackets</h1> -->
+                        
+                          <div class="sort">
+                        <div class="col-sm-4">
+                            <div class="collection-sort">
+                              <label>Description:</label>
+                              <input type="search" class="form-control filterControl bg-light small" aria-label="Search"
+                              aria-describedby="basic-addon2" placeholder="Search by Description"
+                              [(ngModel)]="SearchDescription" style="background-color: white" />
+                            </div>
+                          </div>
+                          <div class="col-sm-4">
+                            <div class="collection-sort">
+                              <label>Date:</label>
+                              <select
+                                class="form-select filterControl"
+                                (change)="GetExpenses(filter.value)"
+                                #filter
+                                id="inputGroupSelect04"
+                                aria-label="Example select with button addon"
+                              >
+                                <option value="All" selected="All">All</option>
+                                <option value="LW">Last Week</option>
+                                <option value="LM">Last Month</option>
+                                <option value="L3M">Last 3 Months</option>
+                                <option value="L6M">Last 6 Months</option>
+                                <option value="LY">Last Year</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-sm-4">
+                            <div class="collection-sort">
+                              <label>Date:</label>
+                              <input
+                              type="date"
+                              class="form-control border-0 small  filterControl"
+                              #searchDate
+                              (change)="GetExpenceAccDate(searchDate.value)"
+                              placeholder="Search for..."
+                              aria-label="Search"
+                              aria-describedby="basic-addon2"
+                            />
+                            </div>
+                          </div>
+                        </div>
+                        </nav>
+                      </div>
+                      <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-default" *ngFor="let i of transactionLists; let j = index">
+                          <div class="panel-heading" role="tab" [attr.id]="'heading' + j" *ngIf="
+              i.description
+                .toUpperCase()
+                .includes(this.SearchDescription.toUpperCase())
+            ">
+                            <h4 class="panel-title" [ngClass]="
+                            i.status == 'Positive'
+                              ? 'bgSuccess'
+                              : 'bgDanger'
+                          ">
+                              <a role="button" data-toggle="collapse" data-parent="#accordion"
+                                [attr.href]="'#collapse' + j" aria-expanded="true"
+                                [attr.aria-controls]="'collapse' + j">
+                                <div class="icon">
+                                  <div style="font-size: 11px">
+                                    {{ i.date | date : "MMM" | uppercase }}
+                                  </div>
+                                  <div style="font-size: 12px">{{ i.date | date : "dd" }}</div>
+                                  <div style="font-size: 12px">
+                                    {{ i.date | date : "yyyy" }}
+                                  </div>
+                                </div>
+                                {{ i.description | uppercase }}
+                                <span class="badge bg-info groupName">{{
+                                  i.groupName | uppercase
+                                  }}</span>
+                                <br />
+                                <em style="font-size: 10px; color: indianred">{{ i.categoryName }}
+                                </em>
+                                <!-- <i class="fa fa-question tooltipQues tooltipp">
+                                <div class="tooltiptext">
+                                <b class="text-red">Category :</b>{{i.categoryName}}
+                                <br>
+                                <b class="text-red">Added On :</b>{{i.date | date}}
+                              </div>
+                            </i> -->
+                                <!-- <div class="mobileInfo">
+                              <div class="tooltipQues tooltipp">
+                                <i class="fa fa-question"></i>
+                                <span class="tooltiptext">Tooltip text</span>
+                              </div>
+                              
+                            </div> -->
+                                <div class="paidBy">
+                                  <div class="col-sm-2 text-center text-truncate font-f"
+                                    style="line-height: 23px;width: 100%;">
+                                    <span style="font-size: 12px;">Paid by </span><span
+                                      style="font-size: 12px; color: #868383" data-bs-toggle="tooltip"
+                                      data-bs-placement="top" [title]="i.paidByMemberEmail">
+                                      {{ i.paidByMemberName }}</span><br /><span style="font-size: 15px"><i
+                                        [ngClass]="CurrencyIcon"></i> {{ i.amount }}</span>
+                                  </div>
+                                  <!-- <div style="font-size: 11px">Paid By</div>
+                  <div
+                    style="font-size: 12px; color: rgb(9, 61, 182)"
+                    class="text-truncate"
+                  >
+                    {{ i.paidByMemberName | uppercase }}
+                  </div> -->
+                                </div>
+                                <div class="paidByAmount">
+                                  <div class="col-sm-2 text-center text-truncate"
+                                    style="line-height: 23px;width: 100%;">
+                                    <span style="font-size: 12px" *ngIf="i.lentByName == 'You'">Lent On
+                                      <span style="font-size: 12px; color: #868383" data-bs-toggle="tooltip"
+                                        data-bs-placement="top" [title]="i.lentByEmail">You</span></span>
+                                    <span style="font-size: 12px" *ngIf="i.lentByName != 'You'">Lent By
+                                      <span style="font-size: 12px; color: #868383" data-bs-toggle="tooltip"
+                                        data-bs-placement="top" [title]="i.lentByEmail">{{ i.paidByMemberName }}</span>
+                                    </span>
+                                    <span style="font-size: 12px; color: #868383"></span><br /><span
+                                      style="font-size: 15px" [ngClass]="
+                        i.status == 'Positive'
+                          ? 'text-success'
+                          : 'text-danger'
+                      " data-bs-toggle="tooltip" data-bs-placement="top" [title]="i.paidByMemberEmail"><i
+                                        [ngClass]="CurrencyIcon"></i> {{ i.lentByAmount }}</span>
+                                  </div>
+                                </div>
+                              </a>
+                            </h4>
+                          </div>
+                          <div
+                          [attr.id]="'collapse' + j"
+                          class="panel-collapse collapse in"
+                          role="tabpanel"
+                          [attr.aria-labelledby]="'heading' + j"
+                        >
+                          <div class="panel-body">
+                            <div class="row mobileViewInfo table-responsive">
+                              <table
+                                class="table table-responsive"
+                                style="font-size: 10px; line-height: 11px"
+                              >
+                                <tr>
+                                  <th>Group:</th>
+                                  <td>{{ i.groupName }}</td>
+                                  <th>Date:</th>
+                                  <td>{{ i.date | date }}</td>
+                                </tr>
+                                <tr>
+                                  <th>Paid By:</th>
+                                  <td>{{ i.paidByMemberName }}</td>
+                                  <th>Amount:</th>
+                                  <td>₹ {{ i.amount }}</td>
+                                </tr>
+                              </table>
+                            </div>
+                            <div class="users" style="display: block; padding: 0px">
+                              <table>
+                                <tbody>
+                                  <tr>
+                                    <td class="left">
+                                      <table class="shares">
+                                        <tbody class="sharesTbody">
+                                          <tr class="user" *ngFor="let k of i.lstTransaction">
+                                            <td class="avatar">
+                                              <img
+                                                src="https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-ruby28-100px.png"
+                                                class="avatar"
+                                                alt="User avatar"
+                                              />
+                                            </td>
+                                            <td>
+                                              <strong
+                                                >&nbsp;&nbsp;{{
+                                                  k.participantMemberName
+                                                }}</strong
+                                              >
+                                              <span
+                                                style="font-size: 12px; font-weight: 100"
+                                                *ngIf="k.distributedAmount != 0"
+                                              >
+                                                owes
+                                              </span>
+                                              <strong *ngIf="k.distributedAmount != 0"
+                                                >₹ {{ k.distributedAmount }}</strong
+                                              >
+                                              <span
+                                                *ngIf="k.distributedAmount == 0"
+                                                style="
+                                                  padding-bottom: 7px;
+                                                  font-size: 12px;
+                                                  color: #999;
+                                                "
+                                              >
+                                                (Not Included)</span
+                                              >
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                        </div>
+                      </div>
+                     
+                    </div>
+                  </div>
+                </div>
+                <div class="row mt-3">
+                  <div class="empty-state" *ngIf="transactionLists.length == 0">
+                    <div class="empty-state__content">
+                      <div class="empty-state__icon">
+                        <img
+                          src="data:image/png;base64,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"
+                          alt="" />
+                      </div>
+                      <div class="empty-state__message">No records has been added yet.</div>
+                      <div class="empty-state__help">
+                        Add a new record by simply clicking the button on top right side.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="custom-tabs-five-overlay-dark Transaction=1" role="tabpanel"
+              aria-labelledby="custom-tabs-five-overlay-dark Transaction=1 " *ngIf="isMemberActive">
+              <div class="overlay-wrapper font-f">
+                <app-settle-up [grpId]="grpId" [Transaction]="1"></app-settle-up>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="custom-tabs-five-overlay-dark Transaction=-1" role="tabpanel"
+              aria-labelledby="custom-tabs-five-overlay-dark-tab Transaction=-1" *ngIf="isMemberActive">
+              <div class="overlay-wrapper">
+                <app-settle-up [grpId]="grpId" [Transaction]="-1"></app-settle-up>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="custom-tabs-five-overlay-dark Transaction=0" role="tabpanel"
+              aria-labelledby="custom-tabs-five-overlay-dark-tab Transaction=0" *ngIf="isMemberActive">
+              <div class="overlay-wrapper">
+                <app-settle-up [grpId]="grpId" [Transaction]="0"></app-settle-up>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="custom-tabs-five-overlay-dark Transaction=2" role="tabpanel"
+              aria-labelledby="custom-tabs-five-overlay-dark-tab Transaction=2" *ngIf="isMemberActive">
+              <div class="overlay-wrapper">
+                <app-settle-up [grpId]="grpId" [Transaction]="2"></app-settle-up>
+              </div>
+            </div>
+            <!-- <div
+              class="tab-pane fade"
+              id="custom-tabs-five-normal"
+              role="tabpanel"
+              aria-labelledby="custom-tabs-five-normal-tab"
+            >
+              Mauris tincidunt mi at erat gravida, eget tristique urna bibendum.
+              Mauris pharetra purus ut ligula tempor, et vulputate metus
+              facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing
+              elit. Vestibulum ante ipsum primis in faucibus orci luctus et
+              ultrices posuere cubilia Curae; Maecenas sollicitudin, nisi a
+              luctus interdum, nisl ligula placerat mi, quis posuere purus
+              ligula eu lectus. Donec nunc tellus, elementum sit amet ultricies
+              at, posuere nec nunc. Nunc euismod pellentesque diam.
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-sm-1 col-md-3">
+      <!-- <div (click)="openNav()"><i class='fas fa-arrow-left arrow'></i></div> -->
+      <!-- <div id="rightBar" class="rightBar">
+        <button class="closebtn" type="click" (click)="closeNav()">&times;</button>
+        <app-allgroup-members *ngIf="grpId !=myExpenseGId" [grpId]="grpId" [groupExpenseListData]="totalAmountG"
+          [isMemberActive]="isMemberActive"></app-allgroup-members>
+      </div> -->
+      <div class="allgroupMembers">
+        <app-allgroup-members *ngIf="grpId !=myExpenseGId" [grpId]="grpId" [groupExpenseListData]="totalAmountG"
+          [isMemberActive]="isMemberActive"></app-allgroup-members>
+      </div>
+      <!-- Use any element to open the sidenav -->
+      <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
+
+    </div>
+  </div>
+
+  <div class="modal fade" data-bs-keyboard="false" id="exampleModalToggle" aria-hidden="true"
+    aria-labelledby="exampleModalToggleLabel" tabindex="-1" *ngIf="isMemberActive">
+    <div class="modal-dialog modal-dialog-centered font-f">
+      <div class="modal-content font-f">
+        <div class="modal-header font-f"
+          style="background:linear-gradient(145deg,rgb(0 161 167) 0%,rgb(4,29,89) 100%) no-repeat fixed ;">
+          <h4 class="modal-title font-f" id="exampleModalToggleLabel"
+            style="position: relative; font-size: 1.25rem; padding: 5px;color:white;">
+            Add Expense Here!
+          </h4>
+          <button type="button" id="close" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body font-f">
+          <form [formGroup]="expenseForm">
+            <div class="row">
+              <div class="col-sm-12" style="display: -webkit-box">
+                <h5 class="font-f">Expense of Group</h5>
+                &nbsp;&nbsp;&nbsp;
+                <div class="badge badge-pill badge-info mb-2 font-f" style="font-size: unset">
+                  {{ groupName | titlecase }}
+                </div>
+                <div class="" style="width: 54%; position: relative; top: -10px"></div>
+                <hr />
+              </div>
+              <div class="row" style="margin: 0px auto">
+                <div class="col-sm-12" style="padding: 0px">
+                  <table>
+                    <tr>
+                      <td rowspan="2">
+                        <img
+                          src="https://s3.amazonaws.com/splitwise/uploads/category/icon/square_v2/uncategorized/general@2x.png"
+                          class="category" style="width: 100px" />
+                      </td>
+
+                      <td style="display: inline-flex">
+                        <select aria-label="Example select with button addon" formControlName="category"
+                          class="form-select font-f" [(ngModel)]="category" style="
+                            padding-left: 24px;
+                            padding-top: 0px;
+                            height: 35px;
+                            margin-left: 10px;
+                          ">
+                          <option [value]="ctgr.id" *ngFor="let ctgr of Categories">
+                            {{ ctgr.name }}
+                          </option>
+                        </select>
+                        <div class="input-group mb-3" style="width: 98%;
+                          margin-left: 10px;
+                      
+                        ">
+                          <span style="padding-top: 20px;" class="{{CurrencyIcon}}"></span> &nbsp;
+                          <!-- <select class="form-group-text" disabled>
+                            <option selected>INR</option>
+                            <option value="1">USD</option>
+                            <option value="2">URO</option>
+                          </select> -->
+                          <input type="text" class="cost form-control font-f" formControlName="totalAmount"
+                            [(ngModel)]="expenditure" (blur)="calculation()" min="0"
+                            aria-label="Amount (to the nearest dollar)" />
+
+
+                          <!-- 
+                         <span class="warning" *ngIf="expenseForm.controls['totalAmount'].errors?.pattern && expenseForm.controls['totalAmount'].dirty">
+                            * *Please enter only number</span> -->
+
+                        </div>
+
+                      </td>
+                      <td style="display: inline-flex">
+                        <div class="text-danger font-f" style="font-size: 12px;
+                        margin-left: 218px;
+                        margin-top: -30px;" [hidden]="
+                          !(expenseForm.controls['totalAmount'].errors?.pattern &&
+                          expenseForm.controls['totalAmount'].touched)">
+                          You must enter an number.
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="form-floating font-f" style="width: 98%; margin-left: 10px">
+                          <textarea class="form-control font-f" formControlName="description"
+                            placeholder="Enter Description here..." id="floatingTextarea"></textarea>
+                          <label for="floatingTextarea">Description</label>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th *ngIf="grpId !=myExpenseGId">Paid By :</th>
+                      <th *ngIf="grpId==myExpenseGId">Date :</th>
+                      <td>
+                        <div class="row">
+                          <div *ngIf="grpId !=myExpenseGId" class="col-sm-1" style="margin-top:10px ;">
+                            <!-- <input type="hidden" [value]="this.UserMemberId" formControlName="paidBy" id="ddlPaidBy" > -->
+                            <select formControlName="paidBy" id="ddlPaidBy" class="form-select mt-2 font-f"
+                              style="width: 110%; margin-left: 10px;" hidden>
+                              <option [value]="this.UserMemberId" [selected]="this.UserMemberId"
+                                [defaultSelected]="this.UserMemberId">
+                                {{ this.decoded.Name }}
+                              </option>
+                            </select>
+                            <h5 style="margin-top: 10px;position: relative;
+                        left: -30px;"> <span class="badge bg-warning font-f" data-bs-toggle="tooltip"
+                                data-bs-placement="top" [title]="this.decoded.Name"> You </span></h5>
+                          </div>
+                          <div class="col-sm-5" style="margin-top:10px ;">
+                            <input type="date" id="theDate" class="form-control font-f" formControlName="date" />
+                          </div>
+                          <div *ngIf="grpId !=myExpenseGId" class="col-sm-6 font-f" style="margin-top:10px ;">
+                            Share: <i [ngClass]="CurrencyIcon"></i>&nbsp;{{ totalShare }} / Member
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+
+                  <!-- <div class="row mt-2">
+                    <div class="col-sm-6">
+                      <input type="date" id="theDate" class="form-control" formControlName="date" />
+                    </div>
+                    <div class="col-sm-6 text-right">
+                      Share: <b class="fa fa-rupee">&nbsp;{{ totalShare }}</b> / Person
+                    </div>
+                  </div> -->
+
+                  <cdk-accordion class="example-accordion mt-2">
+                    <cdk-accordion-item *ngFor="let item of items; let index = index" #accordionItem="cdkAccordionItem"
+                      class="example-accordion-item font-f" role="button" tabindex="0"
+                      [attr.id]="'accordion-header-' + index" [attr.aria-expanded]="accordionItem.expanded"
+                      [attr.aria-controls]="'accordion-body-' + index">
+                      <div *ngIf="grpId !=myExpenseGId" class="example-accordion-item-header font-f"
+                        style="background: #dee8ff; padding: 7px 10px 7px 10px" (click)="accordionItem.toggle()">
+                        <!-- {{ item }} -->Split B/W Equally-({{
+                        selectedMember
+                        }}/{{ totalParticipants }}
+                        member selected)
+                        <span class="example-accordion-item-description font-f">
+                          Click here to
+                          {{ accordionItem.expanded ? "open" : "close" }}
+                        </span>
+                      </div>
+                      <div *ngIf="grpId !=myExpenseGId" class="example-accordion-item-body" role="region"
+                        [style.display]="accordionItem.expanded ? 'none' : ''" [attr.id]="'accordion-body-' + index"
+                        [attr.aria-labelledby]="'accordion-header-' + index" style="
+                          padding: 0px 0px 0px 0px;
+                          height: 130px;
+                          overflow-x: scroll;
+                        ">
+                        <div *ngIf="grpId !=myExpenseGId" id="myDropdown" class="dropdown-content show"
+                          style="height: 130px; overflow: scroll">
+                          <input type="text" placeholder="Search.." id="myInput" (keyup)="filterFunction()"
+                            style="position: sticky; top: 0; z-index: 999999" />
+                          <a *ngFor="let i of list">
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" (change)="Participants(i)" checked
+                                style="z-index: 99999" />
+                              <label class="form-check-label" for="Checkme1">{{
+                                i.name
+                                }}</label>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </cdk-accordion-item>
+                  </cdk-accordion>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-save font-f" [disabled]="expenseForm.invalid"
+            (click)="SaveTransaction()">
+            Submit
+          </button>
+          <button type="button" class="btn cnl font-f" data-bs-dismiss="modal">
+            Cancel
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="isMemberActive">
+    <app-settleup-modal [grpId]="grpId">hello</app-settleup-modal>
+  </div>
+</div>

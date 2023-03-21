@@ -1,0 +1,36 @@
+<div class="chart-container">
+<div class="row">
+  <div class="col-sm-8">
+<div class="input-group" style="width: 50%;">
+  <span style="
+  color: black;
+  font-weight: 600;
+  position: relative;
+  top: 6px;">Search By Group :&nbsp;&nbsp;&nbsp;</span>
+  <select aria-label="Example select with button addon" id="GroupIddd" #GroupIdd class="form-select"  (change)="GetChartAccGroup(GroupIdd.value)">
+    <option value="0" >All Groups</option>
+    <option [value]="grp.id" *ngFor="let grp of groups;">{{grp.groupName}}</option>
+  </select>
+</div>
+</div>
+<div class="col-sm-4">
+<button (click)="exportExcel()" class="btn-sm" style="float: right; background-color: #2ad9c2; color: #041d59; border: none;">Export to Excel</button>
+</div>
+</div>
+<br/>
+
+<ngx-charts-advanced-pie-chart
+    [results]="saleData"
+    [gradient]="true" 
+    [legend]="true"
+    [legendTitle]="'Product Sale Report'"
+    [view]="[600,200]" 
+    [labels]="true">
+</ngx-charts-advanced-pie-chart>
+</div>
+<table id="excel-table" hidden>
+  <tr *ngFor="let item of saleData">
+    <td>{{item.name}}</td>
+    <td>{{item.value}}</td>
+  </tr>
+</table>

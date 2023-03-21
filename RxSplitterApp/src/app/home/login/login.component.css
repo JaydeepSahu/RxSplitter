@@ -1,0 +1,180 @@
+/* Please ❤ this if you like it! */
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800,900');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
+body{
+	font-family: 'Poppins', sans-serif;
+	font-weight: 300;
+	font-size: 15px;
+	line-height: 1.5;
+	color: #c4c3ca;
+}
+a {
+	cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  color: #000;
+}
+a:hover {
+	text-decoration: none;
+  color: #2ad9c2;
+}
+
+::-webkit-input-placeholder {color:#414141;}
+:-moz-placeholder {color:#414141;}
+::-moz-placeholder {color:#414141;}
+:-ms-input-placeholder {color:#414141;}
+input[type="text"],
+input[type="email"],
+input[type="password"]{color: #414141;width: 100%;position: relative;display: inline-block;border: 1px solid #d4d4d4;outline: none;border-radius: 0px;padding: 6px 10px 8px 10px;font-size: 14px;background-color: #FFF;-webkit-transition: all 0.5s ease-out;-moz-transition: all 0.5s ease-out;-ms-transition: all 0.5s ease-out;-o-transition: all 0.5s ease-out;transition: all 0.5s ease-out;}
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus
+{-webkit-transition:all 0.5s ease-in-out;-webkit-transition:all 0.5s ease-out; -moz-transition:all 0.5s ease-out; -ms-transition:all 0.5s ease-out; -o-transition:all 0.5s ease-out;transition:all 0.5s ease-out;}
+textarea{max-width:100%;height:80px !important;resize: none}
+.btn-theme {
+  box-shadow: none;
+  border: 1px solid #03557a;
+  background: #03557a;
+  color: #fff;
+  font-size: 16px;
+}
+.btn-theme:hover {
+  background: #fff;
+  color: #03557a;
+}
+
+.auth-section {
+  height: 100%;
+  background-color: #e9ecef;
+}
+.auth-section .auth-section-inner {
+  max-width: 400px;
+}
+.auth-section .auth-section-inner small {
+  font-size: 11px;
+}
+
+[type="checkbox"]:checked,
+[type="checkbox"]:not(:checked){
+  position: absolute;
+  left: -9999px;
+}
+.auth-section .auth-section-inner .checkbox:checked + label,
+.auth-section .auth-section-inner .checkbox:not(:checked) + label{
+  position: relative;
+  display: block;
+  text-align: center;
+  width: 60px;
+  height: 16px;
+  border-radius: 8px;
+  padding: 0;
+  margin: 10px auto;
+  cursor: pointer;
+  background-color: #03557a;
+}
+.auth-section .auth-section-inner .checkbox:checked + label:before,
+.auth-section .auth-section-inner .checkbox:not(:checked) + label:before{
+  position: absolute;
+  display: block;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: #ffeba7;
+  background-color: #03557a;
+  font-family: 'unicons';
+  content: '';
+  z-index: 20;
+  top: -10px;
+  left: -10px;
+  line-height: 36px;
+  text-align: center;
+  font-size: 24px;
+  transition: all 0.5s ease;
+}
+.auth-section .auth-section-inner .checkbox:checked + label:before {
+  transform: translateX(44px) rotate(-270deg);
+}
+
+
+.auth-section .auth-section-inner .card-3d-wrap {
+  position: relative;
+  max-width: 100%;
+  min-height: 400px;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  perspective: 800px;
+  margin-top: 60px;
+  padding: 0;
+  text-align: center;
+  border-radius: 5px;
+  /* background-color: #fff; */
+}
+.auth-section .auth-section-inner .card-3d-wrap .card-3d-wrapper {
+  width: 100%;
+  height: 100%;
+  position:absolute;    
+  top: 0;
+  left: 0;  
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  transition: all 600ms ease-out; 
+}
+.auth-section .auth-section-inner .card-3d-wrap .card-3d-wrapper .input-group-text {
+  width: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.auth-section .auth-section-inner .card-3d-wrap .card-3d-wrapper .card-front, 
+.auth-section .auth-section-inner .card-3d-wrap .card-3d-wrapper .card-back {
+  width: 100%;
+  height: 100%;
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  background-size: 300%;
+  position: absolute;
+  border-radius: 6px;
+  left: 0;
+  top: 0;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -o-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.auth-section .auth-section-inner .card-3d-wrap .card-3d-wrapper .card-front {
+  height: 350px !important;
+  background-color: #fff;
+  box-shadow: 0px 0px 10px #ddd;
+}
+.auth-section .auth-section-inner .card-3d-wrap .card-3d-wrapper .card-back {
+  transform: rotateY(180deg);
+  height: 390px !important;
+  background-color: #fff;
+  box-shadow: 0px 0px 10px #ddd;
+}
+.auth-section .auth-section-inner .checkbox:checked ~ .card-3d-wrap .card-3d-wrapper {
+  transform: rotateY(180deg);
+}
+.center-wrap {
+  position: absolute;
+  width: 100%;
+  top: 10%;
+  left: 0;
+  z-index: 20;
+  display: block; 
+  padding: 15px;
+}
+.logo {
+	position: absolute;
+	top: 10px;
+	right: 30px;
+	display: block;
+	z-index: 100;
+	transition: all 250ms linear;
+}
+.logo img {
+	height: 40px;
+	width: 40px;
+	display: block;
+}

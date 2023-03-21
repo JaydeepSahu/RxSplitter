@@ -1,0 +1,43 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active">
+      <a routerLink="../Dashboard">Home</a>
+    </li>
+    <li class="breadcrumb-item">Reports</li>
+  </ol>
+</nav>
+
+        <div class="heading">
+            <div class="card">
+              <div class="card-header">All Group Expenses</div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <app-all-expense-charts></app-all-expense-charts>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card mt-3">
+              <div class="card-header">Group Expenses</div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <app-group-expenses-charts></app-group-expenses-charts>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card mt-3">
+              <div class="card-header">Month wise Expenses</div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <app-monthwise-expenses></app-monthwise-expenses>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+<router-outlet></router-outlet>

@@ -1,0 +1,126 @@
+<table class="table" *ngIf="Transaction==1">
+  <thead>
+    <tr>
+      <th scope="col">S.No</th>
+      <th scope="col">Payee</th>
+      <th scope="col">Reciever</th>
+      <th scope="col">Amount</th>
+      <th scope="col">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr *ngFor="let i of transactionList; let j = index">
+        <th scope="row">{{ j + 1 }}</th>
+        <td>{{ i.paidFrom }}</td>
+        <td>{{ i.paidTo }}</td>
+        <td>{{ i.amount | toPositiveAmount  }}</td>
+        <td *ngIf="i.isLoggedIn==1">
+        <button class="btn btn-success btn-sm"  *ngIf="i.status=='Pending'" (click)="accept(i.id)">Confirm</button>
+        <h5><span class="badge badge-info"  *ngIf="i.status=='Completed'">Completed
+        </span></h5>
+        </td>
+        <td *ngIf="i.isLoggedIn==0 && i.status=='Pending'">
+            <h5><span class="badge bg-warning text-dark"> {{i.status}}</span></h5>
+        </td>    
+        <td *ngIf="i.isLoggedIn==0 && i.status=='Completed'">
+            <h5><span class="badge badge-info" >{{i.status}}</span></h5>
+        </td>    
+      </tr>
+  </tbody>
+</table>
+
+<!-- *ngIf="i.isLoggedIn==1" -->
+<table class="table" *ngIf="Transaction==-1">
+    <thead>
+      <tr>
+        <th scope="col">S.No</th>
+        <th scope="col">Payee</th>
+        <th scope="col">Reciever</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Status</th>
+      </tr>
+    </thead>
+    <tbody >
+        <tr *ngFor="let i of lstPendingOnMe; let g = index">
+        <ng-container>
+          <th scope="row">{{ g + 1 }}</th>
+          <td>{{ i.paidFrom }}</td>
+          <td>{{ i.paidTo }}</td>
+          <td>{{ i.amount | toPositiveAmount }}</td>
+          <td >
+          <button class="btn btn-success btn-sm"  (click)="accept(i.id)">Confirm</button>
+          </td>
+        </ng-container>
+        </tr>
+    </tbody>
+  </table>
+  
+  <!-- *ngIf="i.isLoggedIn==1" -->
+  <table class="table " *ngIf="Transaction==0">
+    <thead>
+      <tr>
+        <th scope="col">S.No</th>
+        <th scope="col">Payee</th>
+        <th scope="col">Reciever</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let i of transactionList; let j = index" >
+        <ng-container *ngIf="i.status!='Pending'">
+          <th scope="row">{{ j + 1 }}</th>
+          <td>{{ i.paidFrom }}</td>
+          <td>{{ i.paidTo }}</td>
+          <td>{{ i.amount| toPositiveAmount  }}</td>
+          <!-- <td *ngIf="i.isLoggedIn==1">
+          <h5><span class="badge bg-success"  *ngIf="i.status=='Completed'">Completed
+          </span></h5>
+          </td> -->
+          <!-- <td *ngIf="i.isLoggedIn==0 && i.status=='Pending'">
+              <h5><span class="badge bg-warning text-dark"> {{i.status}}</span></h5>
+          </td>     -->
+          <td>
+              <h5><span class="badge badge-info" >{{i.status}}</span></h5>
+          </td>   
+        </ng-container>
+        </tr>
+    </tbody>
+  </table>
+  
+
+    <!-- *ngIf="i.isLoggedIn==1" -->
+    <table class="table " *ngIf="Transaction==2">
+        <thead>
+          <tr>
+            <th scope="col">S.No</th>
+            <th scope="col">Payee</th>
+            <th scope="col">Receiver</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let i of lstPendingOnOthers; let o = index" >
+            <ng-container>
+              <th scope="row">{{ o + 1 }}</th>
+              <td>{{ i.paidFrom }}</td>
+              <td>{{ i.paidTo }}</td>
+              <td>{{i.amount | toPositiveAmount}}</td>
+              <!-- <td *ngIf="i.isLoggedIn==1">
+              <h5><span class="badge bg-success"  *ngIf="i.status=='Completed'">Completed
+              </span></h5>
+              </td> -->
+              <!-- <td *ngIf="i.isLoggedIn==0 && i.status=='Pending'">
+                  <h5><span class="badge bg-warning text-dark"> {{i.status}}</span></h5>
+              </td>     -->
+              <td>
+                  <h5><span class="badge bg-warning" >{{i.status}}</span></h5>
+              </td>   
+            </ng-container>
+            </tr>
+        </tbody>
+      </table>
+      
+  <!-- *ngIf="i.isLoggedIn==1" -->
+    

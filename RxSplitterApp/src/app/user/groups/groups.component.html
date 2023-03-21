@@ -1,0 +1,120 @@
+<!-- <div class="content-block"> -->
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active"><a routerLink="../Dashboard">Home</a></li>
+      <li class="breadcrumb-item">Add Group</li>
+     
+    </ol>
+  </nav>
+
+  <ng-template #loggedOut>
+  <div class="card">
+    <!-- <div class="card-header" style="padding: 12px 0px 8px 20px;">
+      <h4>
+        Start a new group
+      </h4>
+    </div> -->
+    <div class="card-body">
+      <form>
+        <form class="row gy-2 gx-3 align-items-center">
+          <div style="font-size: 24px; line-height: 140%; margin: 16px 0 5px">
+            <label class="font-f"> My group shall be called</label>
+           
+          </div>
+          <div class="col-auto">
+            <!-- <label class="visually-hidden" for="autoSizingSelect">Preference</label> -->
+            <select aria-label="Example select with button addon" [(ngModel)]="CurrencyId" name="CurrencyId" class="form-select font-f">
+              <option value="undefined" selected>--Select--</option>
+               <option [value]="curId.id" *ngFor="let curId of Currency">{{curId.code}}</option>
+             </select>
+          </div>
+          <div class="col-auto">
+            <!-- <label class="visually-hidden" for="autoSizingInput">Name</label> -->
+            <input class="form-control font-f" type="text" placeholder="Enter Group Name" [(ngModel)]="GroupName" name="GroupName" />
+          </div>
+
+         
+         
+          <div class="col-auto btnsAddGroup">
+             <!-- <button class="btn btn-info btn-icn btn-cancel"  (click)="CancelGroup()"><i class="fa-sharp fa-solid fa-xmark"></i></button>
+            <button type="submit" class="btn btn-warning btn-icn" (click)="CreateGroup()" ><i class="fa-solid fa-share-from-square"></i></button> -->
+
+            <button class="btn btn-info btn-icn btn-cancel"  (click)="CancelGroup()" title="Cancel"><i class="fa-sharp fa-solid fa-xmark"></i></button>
+            <button type="submit" class="btn btn-icn" (click)="CreateGroup()" title="Submit" ><i class="fa-solid fa-share-from-square"></i></button>
+         
+            <!-- <button type="submit" class="btn btn-warning btn-txt" (click)="CreateGroup()" >Submit</button>
+            <button class="btn btn-info btn-txt" style="float: right;" (click)="CancelGroup()" style="float: right; margin-left:5px;">Cancel</button>&nbsp; &nbsp; -->
+
+            <button type="submit" class="btn btn-txt font-f" (click)="CreateGroup()" >Submit</button>
+            <button class="btn btn-cnl font-f" style="float: right;" (click)="CancelGroup()" style="float: right; margin-left:5px;">Cancel</button>&nbsp; &nbsp;
+          </div>
+        </form>
+
+
+        
+      </form>
+    </div>
+  </div>
+</ng-template>  
+
+<div class="card" *ngIf="showSecondForm; else loggedOut">
+  <div class="card-header" style="background: #ffe8ba;padding: 0px 0px 0px 30px;">
+    <h3>
+      {{GroupName}}
+    </h3>
+  </div>
+  <div class="card-body">
+      <form  [formGroup]="showForm"   >
+        <h4>Add Member </h4>
+        <div formArrayName="lstGroupMember">
+          <div class="input-group mb-3"  style="max-width: 400px;">
+            <input disabled type="text" style="width: 250px;" value={{alreadyMember}} class="form-control"  aria-label="Recipient's username" aria-describedby="button-addon2">
+            <button type="button" id="button-addon2" (click)="addEContact()" class="btn btn-success font-f"><span class="fa fa-plus"></span></button>
+          </div>
+               <!-- <input disabled type="text" style="width: 250px;" value={{alreadyMember}}>
+
+               <button class="btn btn-add font-f" (click)="addEContact()">Add more</button>  -->
+              
+               
+          <div *ngFor="let item of getGroup().controls; let i = index"  [formGroupName]="i">
+           
+            <br/>
+            <div class="row">
+                <div class="col-sm-12">
+                  <div class="input-group mb-3" style="max-width: 400px;">
+                    <input type="text" style="width: 250px;" placeholder="Enter Email"  class="form-control" formControlName="Email" aria-label="Recipient's username" aria-describedby="button-addon2">
+                    <button type="button" id="button-addon2" (click)="removeQuantity(i)" class="btn btn-danger font-f"><span class="fa fa-close"></span></button>
+                  </div>
+                  <!-- <input type="text" class="form-control font-f" style="width: 250px;" placeholder="Enter Email" formControlName="Email"/> -->
+
+                  <div *ngIf="item.controls.Email.invalid && item.controls.Email.touched">
+                  <div style="color: red;" [hidden]="!item.controls.Email.errors.required">
+                    Email is required
+                  </div>
+                  <div class="text-danger font-f" style="font-size: 12px;" [hidden]="!item.controls.Email.errors.email && item.controls.Email.touched">
+                    Email is not in valid format
+                  </div>
+                  </div>
+                  
+                  <!-- <div class="alert alert-danger" style="padding: 0em" *ngIf="Email.errors?.['required'] 
+                  && (Email.touched || Email.dirty)">Email is required!</div>
+                  <div class="alert alert-danger" style="padding: 0em" *ngIf="Email.errors?.['userName']
+                  && (Email.touched || Email.dirty)">Email is not valid!</div> -->
+                </div>
+            </div>
+            </div>
+            <!-- <div class="col col-md-6">
+              <br/> -->
+            <!-- <button class="btn btn-primary font-f" (click)="addEContact()">Add more</button> &nbsp; -->
+            <!-- </div> -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-info font-f cnlmember" data-dismiss="modal" (click)="cancelAddMember()">Cancel</button>&nbsp;
+          <button [disabled]="showForm.invalid" (click)="submitGroupMember()" type="button" class="btn font-f savemember" type="submit">Submit</button>
+      
+        </div>
+    </form>
+  </div>
+</div>
+<!-- <notifier-container></notifier-container> -->
+<!-- </div> -->

@@ -1,0 +1,201 @@
+<nav class="navbar navbar-expand topbar mb-4 static-top shadow" style="background: linear-gradient(145deg,rgb(0 161 167) 0%,rgb(4,29,89) 100%) no-repeat fixed ;
+margin-left: -20px;position: sticky;
+    z-index: 9;
+    top: 0;height: 3.375rem;">
+
+    <!-- Sidebar Toggle (Topbar) -->
+    <!-- <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+        <i class="fa fa-bars" ></i>
+    </button> -->
+    <div class="hamburger active" (click)="openNav()">
+        <div class="menu">
+            <span class="line one"></span>
+            <span class="line two"></span>
+            <span class="line three"></span>
+        </div>
+    </div>
+    <!-- <span style="font-size:30px;cursor:pointer" (click)="openNav()">&#9776;</span> -->
+    <!-- Topbar Search -->
+    <!-- <form
+        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+        <div class="input-group">
+            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                aria-label="Search" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="button">
+                    <i class="fas fa-search fa-sm"></i>
+                </button>
+            </div>
+        </div>
+    </form> -->
+
+    <!-- Topbar Navbar -->
+    <ul class="navbar-nav ml-auto">
+
+        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+        <!-- <li class="nav-item dropdown no-arrow d-sm-none">
+            <div class="nav-link dropdown-toggle" id="searchDropdown" role="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-search fa-fw"></i>
+        </div>
+            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                aria-labelledby="searchDropdown">
+                <form class="form-inline mr-auto w-100 navbar-search">
+                    <div class="input-group">
+                        <input type="text" class="form-control bg-light border-0 small"
+                            placeholder="Search for..." aria-label="Search"
+                            aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="button">
+                                <i class="fas fa-search fa-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </li> -->
+
+        <!-- Nav Item - Alerts -->
+        <li class="nav-item dropdown no-arrow mx-1">
+            <div class="nav-link dropdown-toggle" id="alertsDropdown" role="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (click)="GetAllNotifications()" style="color: white;
+                font-size: 25px;">
+                <i class="fas fa-bell fa-fw" id="notification"></i>
+      
+                <span class="badge badge-danger badge-counter">{{length}}</span>
+        </div>
+            <!-- Dropdown - Alerts -->
+                <!-- <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                aria-labelledby="alertsDropdown" infiniteScroll [infiniteScrollDistance]="10" [infiniteScrollThrottle]="3000" (scrolled)="onScroll()"  
+                [scrollWindow]="false" style="height: 400px; overflow-y: scroll;"> -->
+                <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                aria-labelledby="alertsDropdown" style="max-height: 400px; overflow-y: scroll;">
+                <h6 class="dropdown-header" style="position: sticky;
+                top: 0px;
+                z-index: 999;">
+                    Alerts Center
+                </h6>
+                <div *ngIf="offers.length>0" class="alert alert-default" role="alert" style="    padding: 0;">
+                    <div *ngFor="let item of offers">
+                        <ng-container *ngIf="item.sentTo==loggedUserId">
+                <div class="dropdown-item d-flex align-items-center" (click)="ReadNotification(item.id)">
+                    <div class="mr-3" >
+                        <div class="icon-circle bg-primary"  *ngIf="item.type==1">
+                            <i class="fas fa-user-alt text-white"></i>
+                        </div>
+                        <div class="icon-circle bg-warning"  *ngIf="item.type==2">
+                            <i class="fas fa-money-bill-1-wave text-white"></i>
+                        </div>
+                        <div class="icon-circle bg-danger"  *ngIf="item.type==3">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" style="
+    height: 20px;
+"><!--! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M64 64l224 0 0 9.8c0 39-23.7 74-59.9 88.4C167.6 186.5 128 245 128 310.2l0 73.8s0 0 0 0H64V64zm288 0l224 0V384H508.3l-3.7-4.5-75.2-90.2c-9.1-10.9-22.6-17.3-36.9-17.3l-71.1 0-41-63.1c-.3-.5-.6-1-1-1.4c44.7-29 72.5-79 72.5-133.6l0-9.8zm73 320H379.2l42.7 64H592c26.5 0 48-21.5 48-48V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48V400c0 26.5 21.5 48 48 48H308.2l33.2 49.8c9.8 14.7 29.7 18.7 44.4 8.9s18.7-29.7 8.9-44.4L310.5 336l74.6 0 40 48zm-159.5 0H192s0 0 0 0l0-73.8c0-10.2 1.6-20.1 4.7-29.5L265.5 384zM192 128a48 48 0 1 0 -96 0 48 48 0 1 0 96 0z" style="
+    fill: white;
+    font-size: -18px;
+    height: -2px;
+"></path></svg>
+                        </div>
+                        <div class="icon-circle bg-secondary"  *ngIf="item.type==4">
+                            <i class="fas fa-question text-white"></i>
+                        </div>
+                        <div class="icon-circle bg-success"  *ngIf="item.type==5">
+                            <i class="fas fa-check-double text-white"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <div style="    font-weight: 700;font-family: sans-serif;">{{item.title}}</div>
+                        <div style="    line-height: normal" >{{item.details}} </div>
+                        
+                        <small class="text-muted">{{item.time}} ago</small>
+                       <i class="fa fa-close" (click)="ReadNotification(item.id)" style="    font-size: 15px;color: red;margin-top: 3px; float: right;"></i>
+                        <!-- <button class="btn btn-danger" (click)="ReadNotification(item.id)">Seen</button> -->
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+    <!-- <a class="dropdown-item text-center small text-gray-500" >...Loading...</a> -->
+    <div *ngIf="offers.length>0"> 
+
+        <div class="btn btn-primary m-3" style="display: block;" (click)="clearAll()"> Clear All</div>
+    </div>
+    <div *ngIf="offers.length==0"> 
+
+       <h5>No notification to show</h5>
+    </div>
+            </div>
+            
+        
+        </li>
+
+        <!-- Nav Item - Messages -->
+        <li class="nav-item dropdown no-arrow mx-1">
+            <!-- <a class="nav-link dropdown-toggle" id="messagesDropdown" role="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-envelope fa-fw"></i>
+            
+                <span class="badge badge-danger badge-counter">0</span>
+            </a> -->
+            <!-- Dropdown - Messages -->
+            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                aria-labelledby="messagesDropdown">
+                <h6 class="dropdown-header">
+                    Message Center
+                </h6>
+                <!-- <a class="dropdown-item d-flex align-items-center">
+                    <div class="dropdown-list-image mr-3">
+                        <img class="rounded-circle" src="img/undraw_profile_1.svg"
+                            alt="...">
+                        <div class="status-indicator bg-success"></div>
+                    </div>
+                    <div class="font-weight-bold">
+                        <div class="text-truncate">Hi there! I am wondering if you can help me with a
+                            problem I've been having.</div>
+                        <div class="small text-gray-500">Emily Fowler · 58m</div>
+                    </div>
+                </a> -->
+                <a class="dropdown-item text-center small text-gray-500">No Messages</a>
+            </div>
+        </li>
+
+        <div class="topbar-divider d-none d-sm-block"></div>
+
+        <!-- Nav Item - User Information -->
+        <li class="nav-item dropdown no-arrow">
+            <a class="nav-link dropdown-toggle" id="userDropdown" role="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline medium" style="color: white;
+                font-weight: 400;">{{loggedUserVal}}  </span>
+                <img *ngIf="imageSrc!=undefined" class="img-profile rounded-circle" [src]="imageSrc"
+                    style="background: white;"
+                    >
+                    <img *ngIf="imageSrc==undefined" class="img-profile rounded-circle" src="../../../assets/img/undraw_profile.svg"
+                    style="background: white;"
+                    >
+            </a>
+            <!-- Dropdown - User Information -->
+            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                aria-labelledby="userDropdown">
+                <a class="dropdown-item" routerLink="accountSetting">
+                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Account Setting
+                </a>
+                <!-- <a class="dropdown-item">
+                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Settings
+                </a> -->
+                <!-- <a class="dropdown-item">
+                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Activity Log
+                </a> -->
+                <div class="dropdown-divider"></div>
+                <a  class="dropdown-item cursor-pointer" (click)="logout()" data-toggle="modal" data-target="#logoutModal">
+                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Logout
+                </a>
+            </div>
+        </li>
+
+    </ul>
+
+</nav>

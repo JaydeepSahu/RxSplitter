@@ -1,0 +1,47 @@
+<div class="chart-container">
+<div class="row">
+  <div class="col-sm-8">
+    <div class="input-group" >
+      <span style="
+      color: black;
+      font-weight: 600;
+      position: relative;
+      top: 6px;">Search By Year :&nbsp;&nbsp;&nbsp;</span>
+    <input type="number" placeholder="YYYY" min="2017" max="2100" [(ngModel)]="year"> &nbsp;
+    <button class="btn-sm" style="background-color: #2ad9c2; color: #041d59; border: none;" (click)="searchYear()">Apply</button> &nbsp;
+  </div>
+  </div>
+  <div class="col-sm-4">
+    <button (click)="exportExcel()" class="btn-sm" style="float: right; border: none; background-color: #2ad9c2; color: #041d59;">Export to Excel</button>
+  </div>
+</div>
+
+
+
+
+
+    
+    
+
+<ngx-charts-bar-vertical-stacked
+[view]="view"
+[results]="multi"
+[gradient]="gradient"
+[xAxis]="showXAxis"
+[yAxis]="showYAxis"
+[legend]="showLegend"
+[showXAxisLabel]="showXAxisLabel"
+[showYAxisLabel]="showYAxisLabel"
+[xAxisLabel]="xAxisLabel"
+[yAxisLabel]="yAxisLabel"
+[animations]="animations"
+(select)="onSelect($event)"
+>
+</ngx-charts-bar-vertical-stacked>
+</div>
+<table id="excel-table" hidden>
+    <tr *ngFor="let item of multi">
+      <td>{{item.name}}</td>
+      <td>{{item.value}}</td>
+    </tr>
+  </table>

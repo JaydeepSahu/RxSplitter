@@ -1,0 +1,116 @@
+<a class="logo">
+	<img alt=""
+		src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSP4dDWdtHqNMiYTmGB2dJrazlJMMG2zs_FDw&amp;usqp=CAU">
+	<!-- <img src="https://assets.codepen.io/1462889/fcy.png" alt=""> -->
+</a>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<div class="auth-section py-5 mx-auto d-flex justify-content-center align-items-center">
+	<div class="auth-section-inner w-100 text-center px-3">
+		<h4 class="mb-4 pb-1"><span class="mx-3">Log In </span><span class="mx-3">Sign Up</span></h4>
+		<input class="checkbox " type="checkbox" id="reg-log" name="reg-log" />
+		<label for="reg-log"></label>
+		
+		<div class="card-3d-wrap">
+			<div class="card-3d-wrapper">
+				<div class="card-front">
+					<form [formGroup]="loginForm" (ngSubmit)="loginSubmitted()">
+						<div class="center-wrap">
+							<h4 class="mb-4">Log In</h4>
+							<div class="mb-4">
+								<ng-container *ngIf="displayEmail!=null"><input readonly class="form-style" value={{displayEmail}}></ng-container>
+								<ng-container *ngIf="displayEmail==null">
+									<div class="input-group">
+										<span class="input-group-text"><i class="input-icon uil uil-at fa fa-envelope" aria-hidden="true"></i></span>
+										<input type="email" class="form-style form-control" placeholder="Your Email" id="email" autocomplete="off" formControlName="userName" />
+									</div>
+								</ng-container>
+								<ng-container *ngIf="isSubmitted || (loginForm.get('userName').invalid && (loginForm.get('userName').dirty) || loginForm.get('userName').touched)">
+									<small *ngIf="isSubmitted && (loginForm.get('userName').errors.required)" class="text-danger text-start d-block position-absolute">Email is required!</small>
+									<small *ngIf="loginForm.get('userName').errors?.email && loginForm.get('userName')?.touched" class="text-danger text-start d-block position-absolute">Email is not valid!</small>
+								</ng-container>
+							</div>
+							<div class="mb-4">
+								<div class="input-group">
+									<span class="input-group-text"><i class="input-icon uil uil-lock-alt fa fa-unlock-alt"></i></span>
+									<input type="password" class="form-style form-control" placeholder="Your Password" id="password" formControlName="password" autocomplete="off" />
+								</div>
+								<ng-container *ngIf="isSubmitted || loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)">
+								<small class="text-danger text-start d-block position-absolute" style="padding: 0em" *ngIf="isSubmitted && password.errors?.['required']">Password is required!</small>
+								<small class="text-danger text-start d-block position-absolute" style="padding: 0em" *ngIf="(password.errors?.['minlength'] || password.errors?.['maxlength']) 
+								&& password.touched">Password should be at least 8 digit at the max 15 characters long!</small>
+								</ng-container>
+							</div>
+
+							<div *ngIf="displayEmail!=null">
+								<button type="submit" class="btn btn-theme mb-3">Login</button>
+							</div>
+							<div *ngIf="displayEmail==null">
+								<button type="submit" class="btn btn-theme mb-3">Login</button>
+							</div>
+
+							<a [routerLink]="['/forgetPassword']"> Forgot your password? </a>
+							<!-- </div> -->
+						</div>
+					</form>
+				</div>
+				<!-- <div id="loading-bar-spinner" class="spinner" *ngIf="loader"><div class="spinner-icon"></div></div> -->
+				<!-- <div *ngIf="loader"  id="cover-spin"></div>	 -->
+				<div class="card-back">
+					<form [formGroup]="registerForm" (ngSubmit)="registeredSubmit()">
+						<div class="center-wrap">
+							<!-- <div class="section text-center"> -->
+							<h4 class="mb-4">Sign Up</h4>
+							<div class="mb-4">
+								<div class="input-group">
+									<span class="input-group-text"><i class="input-icon uil uil-user fa fa-user"></i></span>
+									<input formControlName="name" type="text" class="form-control" placeholder="Your Full Name" id="name" autocomplete="off" />
+								</div>
+								<small class="text-danger text-start d-block position-absolute" style="padding: 0em" *ngIf="name.errors?.['required'] 
+								&& name.dirty">Full name is required!</small>
+								<small class="text-danger text-start d-block position-absolute" style="padding: 0em" *ngIf="name.errors?.['minlength']
+								&&  name.dirty">Full name is too short!</small>
+								<small class="text-danger text-start d-block position-absolute" style="padding: 0em" *ngIf="name.errors?.['pattern']
+								&&  name.dirty">Full name should start with alphabet!</small>
+							</div>
+							<div class="mb-4">
+								<ng-container *ngIf="displayEmail!=null">
+									<input readonly type="text" class="form-control" value={{displayEmail}}>
+								</ng-container>
+								<ng-container *ngIf="displayEmail==null">
+									<div class="input-group">
+										<span class="input-group-text"><i class="input-icon uil uil-at fa fa-envelope"></i></span>
+										<input type="email" class="form-control" placeholder="Your Email" id="email" name="email" formControlName="email" />
+									</div>
+								</ng-container>
+								<small class="text-danger text-start d-block position-absolute" style="padding: 0em" *ngIf="email.errors?.['required'] 
+								&&  email.dirty">Email Id name is required!</small>
+								<small class="text-danger text-start d-block position-absolute" style="padding: 0em" *ngIf="email.errors?.['EmailId']
+								&& email.dirty">Email Id is not valid!</small>
+							</div>
+							<div class="mb-4">
+								<div class="input-group">
+									<span class="input-group-text"><i class="input-icon uil uil-lock-alt fa fa-unlock-alt"></i></span>
+									<input formControlName="password" type="password" class="form-control" placeholder="Your Password" id="Password" autocomplete="off" />
+								</div>
+								<small class="text-danger text-start d-block position-absolute" style="padding: 0em" *ngIf="Password.errors?.['required'] 
+								&&  Password.dirty">Password is required!</small>
+								<small class="text-danger text-start d-block position-absolute" style="padding: 0em" *ngIf="Password.errors?.['minlength'] || Password.errors?.['maxlength'] 
+								&&  Password.dirty">Password should be at least 8 digit at the max 15 characters long!</small>
+							</div>
+							<div *ngIf="displayEmail!=null">
+								<button type="submit" class="btn btn-theme mb-3">Submit</button>
+							</div>
+							<div *ngIf="displayEmail==null">
+								<button type="submit" [disabled]="registerForm.invalid" class="btn btn-theme mb-3">Submit</button>
+							</div>
+							<!-- </div> -->
+						</div>
+					</form>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
